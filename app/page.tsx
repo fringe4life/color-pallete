@@ -34,7 +34,7 @@ export default function Home() {
 }
 
 
-export function ButtonOutline({children, ...rest}: Button) {
+function ButtonOutline({children, ...rest}: Button) {
   return <Button variant="outline" className="border-gray-400 dark:text-white dark:bg-slate-600 justify-self-center col-span-1 md:justify-self-stretch md:col-span-1 " {...rest}>{children}</Button>
 }
 
