@@ -27,8 +27,11 @@ import { useCopyToClipboard } from "@uidotdev/usehooks";
 export default function Home() {
   return (
     <QueryClientProvider client={queryClient}>
+
+    <Suspense fallback={<p>loading</p>}>
       <Header />
       <Main/>
+     </Suspense>
     </QueryClientProvider>
   );
 }
@@ -86,7 +89,6 @@ function Header(){
   }
 
   return (
-    <Suspense fallback={<p>loading</p>}>
       <header className="w-full dark:bg-slate-800 mx-auto grid h-22 gap-2 justify-items-center justify-center items-center md:grid-cols-[min-content_1fr_max-content_max-content] max-w-130">
           <input defaultValue={`#${searchParams.get("color")}` || 'fff'} ref={colorRef} type="color" name="color" className="size-10 row-start-1 col-start-1  md:justify-self-start" />
           <Select onValueChange={handleChange}>
@@ -111,7 +113,6 @@ function Header(){
           <ButtonOutline onClick={handleClick} >Get color scheme</ButtonOutline>
           <Button className="justify-self-end col-span-1 row-span-1" onClick={handleTheme}>{theme ==='light' ? <CiLight className="size-8 " /> : <CiDark className="border-gray-400 bg-slate-600 border size-8 rounded-md" />}</Button>
         </header>
-      </Suspense>
   )
 }
 function Main(){
@@ -150,10 +151,8 @@ function Main(){
 
 function Wrapper({children}: React.ComponentPropsWithoutRef<'section'>){
   return (
-    <Suspense fallback={<p>searching</p>}>
       <section className="mx-auto grid grid-cols-5  w-full max-w-130 h-full dark:bg-slate-800">
         {children}
       </section>
-    </Suspense>
   )
 }
