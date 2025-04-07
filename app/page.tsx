@@ -142,12 +142,13 @@ function Main(){
       console.log(elements)
 			return <Wrapper>{elements}</Wrapper>;
 		}
+    return <Wrapper><p  className="col-span-5 justify-self-center self-center">Search for a color</p></Wrapper>
 }
 
 
 function Wrapper({children}: React.ComponentPropsWithoutRef<'section'>){
   return (
-    <section className="mx-auto grid grid-cols-5  w-full max-w-130 h-full">
+    <section className="mx-auto grid grid-cols-5  w-full max-w-130 h-full dark:bg-slate-800">
       {children}
     </section>
   )
