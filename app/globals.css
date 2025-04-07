@@ -1,26 +1,31 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@theme {
+	--select-shadow: 0px 10px 38px -10px rgba(22, 23, 24, 0.35), 0px 10px 20px
+		-15px rgba(22, 23, 24, 0.2);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+	--breakpoint-md: 25rem;
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+	--animate-loading: --loading 2s alternate ease-in-out infinite;
+
+	@keyframes --loading {
+		0% {
+			color: red;
+			letter-spacing: initial;
+			font-size: 1.5rem;
+		}
+		50% {
+			letter-spacing: 3px;
+			color: blue;
+			font-size: 3rem;
+		}
+		100% {
+			color: green;
+			font-size: 1.5rem;
+			letter-spacing: initial;
+		}
+	}
 }
