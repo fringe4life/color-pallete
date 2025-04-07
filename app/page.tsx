@@ -113,7 +113,7 @@ function Header(){
   )
 }
 function Main(){
-   const [_, copyToClipboard] = useCopyToClipboard();
+  const copyToClipboard = useCopyToClipboard()[1];
   const searchParams = useSearchParams()
   const color = (searchParams.get('color') as string)
   const mode = searchParams.get('mode') as string
