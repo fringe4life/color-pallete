@@ -11,7 +11,7 @@ import {
   SelectSeparator
 } from "@/components/ui/select"
 import { Button } from "@/components/ui/button"
-import { useRef, type MouseEventHandler } from "react";
+import { Suspense, useRef, type MouseEventHandler } from "react";
 import { QueryClient, QueryClientProvider, useQuery } from "@tanstack/react-query";
 import { fetchColors, type ReturnedColors } from "./utils";
 import { useRouter,  useSearchParams } from "next/navigation";
@@ -86,30 +86,32 @@ function Header(){
   }
 
   return (
-    <header className="w-full dark:bg-slate-800 mx-auto grid h-22 gap-2 justify-items-center justify-center items-center md:grid-cols-[min-content_1fr_max-content_max-content] max-w-130">
-        <input defaultValue={`#${searchParams.get("color")}` || 'fff'} ref={colorRef} type="color" name="color" className="size-10 row-start-1 col-start-1  md:justify-self-start" />
-        <Select onValueChange={handleChange}>
-          <SelectTrigger className="md:justify-self-center row-start-1 w-full dark:bg-slate-800 dark:text-white text-gray-900 border rounded-md border-gray-400 dark:border-white py-2">
-            <SelectValue placeholder="Choose color mode" />
-          </SelectTrigger>
-          <SelectContent className='dark:bg-slate-800 bg-white'>
-            <SelectGroup>
-              <SelectLabel className="text-lg dark:text-white text-gray-950 font-medium">Color Scheme</SelectLabel>
-              <SelectItem  className='focus:bg-blue-500 dark:text-white text-gray-900' value="monochrome">Monochrome</SelectItem>
-              <SelectItem className='focus:bg-blue-500 dark:text-white text-gray-900' value="monochrome-dark">Monochrome dark</SelectItem>
-              <SelectItem className='focus:bg-blue-500 dark:text-white text-gray-900' value="monochrome-light">Monochrome light</SelectItem>
-              <SelectSeparator className="h-[1px] bg-black w-full"/>
-              <SelectItem className='focus:bg-blue-500 dark:text-white text-gray-900' value="analogic">Analogic</SelectItem>
-              <SelectItem className='focus:bg-blue-500 dark:text-white text-gray-900' value="complement">Complement</SelectItem>
-              <SelectItem className='focus:bg-blue-500 dark:text-white text-gray-900' value="analogic-complement">Analogic complement</SelectItem>
-              <SelectSeparator className="h-[1px] bg-black w-full"/>
-              <SelectItem className='focus:bg-blue-500 dark:text-white text-gray-900' value="triad">Triad</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-        <ButtonOutline onClick={handleClick} >Get color scheme</ButtonOutline>
-        <Button className="justify-self-end col-span-1 row-span-1" onClick={handleTheme}>{theme ==='light' ? <CiLight className="size-8 " /> : <CiDark className="border-gray-400 bg-slate-600 border size-8 rounded-md" />}</Button>
-      </header>
+    <Suspense fallback={<p>loading</p>}>
+      <header className="w-full dark:bg-slate-800 mx-auto grid h-22 gap-2 justify-items-center justify-center items-center md:grid-cols-[min-content_1fr_max-content_max-content] max-w-130">
+          <input defaultValue={`#${searchParams.get("color")}` || 'fff'} ref={colorRef} type="color" name="color" className="size-10 row-start-1 col-start-1  md:justify-self-start" />
+          <Select onValueChange={handleChange}>
+            <SelectTrigger className="md:justify-self-center row-start-1 w-full dark:bg-slate-800 dark:text-white text-gray-900 border rounded-md border-gray-400 dark:border-white py-2">
+              <SelectValue placeholder="Choose color mode" />
+            </SelectTrigger>
+            <SelectContent className='dark:bg-slate-800 bg-white'>
+              <SelectGroup>
+                <SelectLabel className="text-lg dark:text-white text-gray-950 font-medium">Color Scheme</SelectLabel>
+                <SelectItem  className='focus:bg-blue-500 dark:text-white text-gray-900' value="monochrome">Monochrome</SelectItem>
+                <SelectItem className='focus:bg-blue-500 dark:text-white text-gray-900' value="monochrome-dark">Monochrome dark</SelectItem>
+                <SelectItem className='focus:bg-blue-500 dark:text-white text-gray-900' value="monochrome-light">Monochrome light</SelectItem>
+                <SelectSeparator className="h-[1px] bg-black w-full"/>
+                <SelectItem className='focus:bg-blue-500 dark:text-white text-gray-900' value="analogic">Analogic</SelectItem>
+                <SelectItem className='focus:bg-blue-500 dark:text-white text-gray-900' value="complement">Complement</SelectItem>
+                <SelectItem className='focus:bg-blue-500 dark:text-white text-gray-900' value="analogic-complement">Analogic complement</SelectItem>
+                <SelectSeparator className="h-[1px] bg-black w-full"/>
+                <SelectItem className='focus:bg-blue-500 dark:text-white text-gray-900' value="triad">Triad</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          <ButtonOutline onClick={handleClick} >Get color scheme</ButtonOutline>
+          <Button className="justify-self-end col-span-1 row-span-1" onClick={handleTheme}>{theme ==='light' ? <CiLight className="size-8 " /> : <CiDark className="border-gray-400 bg-slate-600 border size-8 rounded-md" />}</Button>
+        </header>
+      </Suspense>
   )
 }
 function Main(){
@@ -148,8 +150,10 @@ function Main(){
 
 function Wrapper({children}: React.ComponentPropsWithoutRef<'section'>){
   return (
-    <section className="mx-auto grid grid-cols-5  w-full max-w-130 h-full dark:bg-slate-800">
-      {children}
-    </section>
+    <Suspense fallback={<p>searching</p>}>
+      <section className="mx-auto grid grid-cols-5  w-full max-w-130 h-full dark:bg-slate-800">
+        {children}
+      </section>
+    </Suspense>
   )
 }
